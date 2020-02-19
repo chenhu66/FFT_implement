@@ -1,5 +1,6 @@
 # FFT
 fft, ifft, r2c, c2r, fft_2d_r2c, ifft_2d_c2r, convolve_1d/2d, correlation_1d/2d, tiling fft implementation.
+fft2: the same as fft, but using std::complex instead of self-defined complex_t
 
 using `build.sh` or `build.bat` in each sub directory to build on linux/windows
 
