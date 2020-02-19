@@ -705,8 +705,8 @@ void fft2d_r2c(const T* t_seq, complex_t<T> * f_seq, size_t seq_w, size_t seq_h,
 #endif
     // vertical
     for(size_t w=0;w<seq_w;w++){
-        T v[seq_h];
-        complex_t<T> f_v[v_len];
+        T* v = new T[seq_h];
+        complex_t<T>* f_v = new complex_t<T>[v_len];
         for(size_t h=0;h<seq_h;h++){
             v[h] = t_seq[h*seq_w+w];
         }
@@ -715,6 +715,9 @@ void fft2d_r2c(const T* t_seq, complex_t<T> * f_seq, size_t seq_w, size_t seq_h,
         for(size_t h=0;h<v_len;h++){
             f_seq[h*seq_w+w] = f_v[h];
         }
+
+        delete[] v;
+        delete[] f_v;
     }
 
     auto omega_func = [](size_t total_n, size_t k){
@@ -784,8 +787,8 @@ void ifft2d_c2r(const complex_t<T> * f_seq, T* t_seq, size_t seq_w, size_t seq_h
 
     // vertical
     for(size_t w=0;w<seq_w;w++){
-        complex_t<T> v[v_len];
-        T t_v[seq_h];
+        complex_t<T>* v = new complex_t<T>[v_len];
+        T* t_v = new T[seq_h];
         for(size_t h=0;h<v_len;h++){
             v[h] = _seq[h*seq_w+w];
         }
@@ -794,6 +797,8 @@ void ifft2d_c2r(const complex_t<T> * f_seq, T* t_seq, size_t seq_w, size_t seq_h
         for(size_t h=0;h<seq_h;h++){
             t_seq[h*seq_w+w] = t_v[h];
         }
+        delete[] v;
+        delete[] t_v;
     }
 }
 template<typename T>
